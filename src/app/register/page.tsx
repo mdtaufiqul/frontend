@@ -26,7 +26,7 @@ import {
     EyeOff
 } from "lucide-react";
 import { toast } from "sonner";
-import AuthTextSlider from "@/components/ui/AuthTextSlider";
+import ParticleBackground from "@/components/ui/ParticleBackground";
 
 const registerPrompts = [
     {
