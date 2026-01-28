@@ -1,0 +1,487 @@
+
+> frontend-next@0.1.0 dev
+> next dev
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/themesloft/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Users/themesloft/.gemini/antigravity/scratch/mediflow-app/frontend-next/package-lock.json
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.101:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 2.8s
+ GET /login 200 in 1348ms (compile: 1222ms, render: 126ms)
+ GET /register 200 in 153ms (compile: 119ms, render: 33ms)
+ GET / 200 in 185ms (compile: 82ms, render: 104ms)
+ GET /settings 200 in 164ms (compile: 138ms, render: 26ms)
+ GET /login 200 in 112ms (compile: 16ms, render: 96ms)
+ GET /register 200 in 52ms (compile: 14ms, render: 37ms)
+ GET /login 200 in 147ms (compile: 78ms, render: 70ms)
+ GET / 200 in 296ms (compile: 48ms, render: 248ms)
+ GET /settings 200 in 46ms (compile: 15ms, render: 31ms)
+ GET /login 200 in 78ms (compile: 26ms, render: 52ms)
+ GET /login 200 in 163ms (compile: 73ms, render: 90ms)
+ GET / 200 in 104ms (compile: 26ms, render: 78ms)
+ GET /settings 200 in 393ms (compile: 25ms, render: 368ms)
+ GET /login 200 in 223ms (compile: 88ms, render: 135ms)
+ GET / 200 in 79ms (compile: 27ms, render: 52ms)
+ GET /settings 200 in 97ms (compile: 30ms, render: 67ms)
+✓ Compiled in 1063ms
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 20ms
+ GET /settings 200 in 740ms (compile: 314ms, render: 425ms)
+ GET /settings 200 in 274ms (compile: 1777µs, render: 272ms)
+ GET /register 200 in 264ms (compile: 58ms, render: 205ms)
+ GET / 200 in 295ms (compile: 16ms, render: 279ms)
+ GET /settings 200 in 147ms (compile: 5ms, render: 142ms)
+ GET / 200 in 147ms (compile: 28ms, render: 119ms)
+ GET /settings 200 in 54ms (compile: 11ms, render: 43ms)
+✓ Compiled in 376ms
+✓ Compiled in 537ms
+✓ Compiled in 358ms
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/context/AuthContext.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET / 200 in 800ms (compile: 209ms, render: 591ms)
+ GET /register 200 in 175ms (compile: 85ms, render: 90ms)
+ GET /settings 200 in 862ms (compile: 534ms, render: 328ms)
+ GET / 200 in 676ms (compile: 65ms, render: 611ms)
+ GET /settings 200 in 251ms (compile: 100ms, render: 152ms)
+ GET /register 200 in 761ms (compile: 94ms, render: 667ms)
+ GET / 200 in 678ms (compile: 115ms, render: 563ms)
+ GET /settings 200 in 86ms (compile: 18ms, render: 68ms)
+ GET /settings 200 in 309ms (compile: 42ms, render: 267ms)
+ GET / 200 in 130ms (compile: 30ms, render: 100ms)
+ GET /settings 200 in 104ms (compile: 8ms, render: 96ms)
+ GET /settings 200 in 54ms (compile: 3ms, render: 51ms)
+ GET /settings 200 in 127ms (compile: 44ms, render: 82ms)
+ GET /settings 200 in 202ms (compile: 82ms, render: 120ms)
+ GET /settings 200 in 388ms (compile: 203ms, render: 185ms)
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+ GET /settings 200 in 177ms (compile: 59ms, render: 117ms)
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/clinics AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/users?role=doctor AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/services AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+ GET /settings 200 in 207ms (compile: 136ms, render: 72ms)
+ GET /settings 200 in 78ms (compile: 23ms, render: 55ms)
+ GET /login 200 in 1834ms (compile: 1144ms, render: 690ms)
+Failed to proxy http://localhost:3001/api/auth/login AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/auth/login AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/auth/login AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+Failed to proxy http://localhost:3001/api/auth/login AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+AggregateError: 
+    at ignore-listed frames {
+  code: 'ECONNREFUSED'
+}
+ GET /login 200 in 102ms (compile: 35ms, render: 67ms)
+ GET / 200 in 67ms (compile: 24ms, render: 44ms)
+ GET / 200 in 88ms (compile: 34ms, render: 54ms)
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+✓ Compiled in 452ms
+ GET / 200 in 496ms (compile: 202ms, render: 294ms)
+ GET / 200 in 64ms (compile: 21ms, render: 43ms)
+ GET / 200 in 28ms (compile: 5ms, render: 22ms)
+ GET /settings 200 in 60ms (compile: 24ms, render: 36ms)
+ GET /settings 200 in 47ms (compile: 14ms, render: 34ms)
+⚠ Fast Refresh had to perform a full reload when ./.gemini/antigravity/scratch/mediflow-app/frontend-next/src/utils/api.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+✓ Compiled in 216ms
+ GET /settings 200 in 495ms (compile: 131ms, render: 364ms)
+ GET /settings 200 in 85ms (compile: 12ms, render: 72ms)
+ GET /settings 200 in 75ms (compile: 24ms, render: 51ms)
+ GET /settings 200 in 314ms (compile: 163ms, render: 150ms)
+ GET /settings 200 in 90ms (compile: 37ms, render: 53ms)
+ GET /settings 200 in 120ms (compile: 58ms, render: 62ms)
+ GET /settings 200 in 142ms (compile: 59ms, render: 83ms)
+ GET /settings 200 in 60ms (compile: 15ms, render: 44ms)
+ GET /workflows 200 in 698ms (compile: 656ms, render: 42ms)
+ GET /workflows/builder?id=6b18656c-ab36-46c3-93f5-ee301548d849 200 in 379ms (compile: 366ms, render: 13ms)
+✓ Compiled in 925ms
+ GET /messages 200 in 2.5s (compile: 2.4s, render: 105ms)
+✓ Compiled in 354ms
+ GET /messages 200 in 458ms (compile: 167ms, render: 291ms)
+ GET /forms 200 in 293ms (compile: 262ms, render: 31ms)
+✓ Compiled in 1284ms
+✓ Compiled in 1ms
+ GET /forms 200 in 1823ms (compile: 1200ms, render: 623ms)
+ GET /forms 200 in 351ms (compile: 25ms, render: 326ms)
+ GET /forms 200 in 288ms (compile: 17ms, render: 270ms)
+ GET /forms 200 in 220ms (compile: 11ms, render: 209ms)
+ GET /forms 200 in 195ms (compile: 9ms, render: 186ms)
+ GET /forms 200 in 212ms (compile: 5ms, render: 207ms)
+ GET /forms 200 in 173ms (compile: 11ms, render: 162ms)
+ GET /forms 200 in 135ms (compile: 2ms, render: 133ms)
+ GET /forms 200 in 136ms (compile: 9ms, render: 128ms)
+ GET /forms 200 in 121ms (compile: 5ms, render: 116ms)
+ GET /forms 200 in 116ms (compile: 4ms, render: 111ms)
+ GET /forms 200 in 150ms (compile: 4ms, render: 146ms)
+ GET /forms 200 in 126ms (compile: 6ms, render: 120ms)
+ GET /forms 200 in 141ms (compile: 3ms, render: 137ms)
+ GET /forms 200 in 172ms (compile: 8ms, render: 164ms)
+ GET /forms 200 in 178ms (compile: 3ms, render: 175ms)
+ GET /forms 200 in 180ms (compile: 8ms, render: 172ms)
+ GET /forms 200 in 165ms (compile: 4ms, render: 161ms)
+ GET /forms 200 in 172ms (compile: 4ms, render: 169ms)
+ GET /forms 200 in 173ms (compile: 4ms, render: 169ms)
+ GET /forms 200 in 153ms (compile: 5ms, render: 149ms)
+ GET /forms 200 in 126ms (compile: 4ms, render: 122ms)
+ GET /forms 200 in 116ms (compile: 5ms, render: 111ms)
+ GET /forms 200 in 103ms (compile: 3ms, render: 100ms)
+ GET /forms 200 in 90ms (compile: 2ms, render: 88ms)
+ GET /forms 200 in 89ms (compile: 3ms, render: 87ms)
+ GET /forms 200 in 82ms (compile: 3ms, render: 80ms)
+ GET /forms 200 in 85ms (compile: 2ms, render: 83ms)
+ GET /forms 200 in 82ms (compile: 1366µs, render: 81ms)
+ GET /forms 200 in 70ms (compile: 1937µs, render: 68ms)
+ GET /forms 200 in 84ms (compile: 1699µs, render: 82ms)
+ GET /forms 200 in 90ms (compile: 2ms, render: 87ms)
+ GET /forms 200 in 85ms (compile: 1586µs, render: 84ms)
+ GET /forms 200 in 113ms (compile: 7ms, render: 106ms)
+ GET /forms 200 in 104ms (compile: 5ms, render: 99ms)
+ GET /forms 200 in 97ms (compile: 3ms, render: 94ms)
+ GET /forms 200 in 99ms (compile: 3ms, render: 97ms)
+ GET /forms 200 in 85ms (compile: 6ms, render: 79ms)
+ GET /forms 200 in 107ms (compile: 2ms, render: 105ms)
+ GET /forms 200 in 134ms (compile: 2ms, render: 132ms)
+ GET /forms 200 in 239ms (compile: 4ms, render: 234ms)
+ GET /forms 200 in 254ms (compile: 4ms, render: 250ms)
+ GET /forms 200 in 311ms (compile: 6ms, render: 305ms)
+ GET /forms 200 in 324ms (compile: 7ms, render: 317ms)
+ GET /forms 200 in 362ms (compile: 13ms, render: 349ms)
+ GET /forms 200 in 307ms (compile: 30ms, render: 276ms)
+ GET /forms 200 in 314ms (compile: 7ms, render: 307ms)
+ GET /forms 200 in 310ms (compile: 16ms, render: 294ms)
+ GET /forms 200 in 203ms (compile: 7ms, render: 197ms)
+ GET /forms 200 in 156ms (compile: 8ms, render: 148ms)
+ GET /forms 200 in 116ms (compile: 6ms, render: 111ms)
+ GET /forms 200 in 116ms (compile: 4ms, render: 112ms)
+ GET /forms 200 in 120ms (compile: 5ms, render: 114ms)
+ GET /forms 200 in 174ms (compile: 4ms, render: 170ms)
+ GET /forms 200 in 175ms (compile: 4ms, render: 171ms)
+ GET /forms 200 in 142ms (compile: 8ms, render: 135ms)
+ GET /forms 200 in 148ms (compile: 5ms, render: 143ms)
+ GET /forms 200 in 143ms (compile: 8ms, render: 135ms)
+ GET /forms 200 in 100ms (compile: 6ms, render: 95ms)
+ GET /forms 200 in 142ms (compile: 2ms, render: 140ms)
+ GET /forms 200 in 200ms (compile: 1516µs, render: 199ms)
+ GET /forms 200 in 178ms (compile: 12ms, render: 166ms)
+ GET /forms 200 in 254ms (compile: 4ms, render: 250ms)
+ GET /forms 200 in 297ms (compile: 4ms, render: 293ms)
+ GET /forms 200 in 307ms (compile: 15ms, render: 292ms)
+ GET /forms 200 in 252ms (compile: 9ms, render: 243ms)
+ GET /forms 200 in 156ms (compile: 20ms, render: 136ms)
+ GET /forms 200 in 87ms (compile: 17ms, render: 69ms)
+ GET /forms 200 in 30ms (compile: 4ms, render: 26ms)
+ GET /forms 200 in 14ms (compile: 2ms, render: 12ms)
+✓ Compiled in 252ms
+✓ Compiled in 1620ms
+ GET /forms 200 in 959ms (compile: 331ms, render: 628ms)
+ GET /forms 200 in 146ms (compile: 13ms, render: 133ms)
+ GET /forms 200 in 94ms (compile: 8ms, render: 85ms)
+ GET /forms 200 in 65ms (compile: 3ms, render: 62ms)
+ GET /forms 200 in 63ms (compile: 2ms, render: 61ms)
+ GET /forms 200 in 62ms (compile: 1212µs, render: 61ms)
+ GET /forms 200 in 73ms (compile: 1503µs, render: 71ms)
+ GET /forms 200 in 71ms (compile: 1269µs, render: 70ms)
+ GET /forms 200 in 78ms (compile: 1861µs, render: 76ms)
+ GET /forms 200 in 79ms (compile: 1798µs, render: 77ms)
+ GET /forms 200 in 69ms (compile: 1903µs, render: 67ms)
+ GET /forms 200 in 86ms (compile: 2ms, render: 84ms)
+ GET /forms 200 in 82ms (compile: 3ms, render: 79ms)
+ GET /forms 200 in 73ms (compile: 2ms, render: 70ms)
+ GET /forms 200 in 80ms (compile: 3ms, render: 77ms)
+ GET /forms 200 in 67ms (compile: 3ms, render: 64ms)
+ GET /forms 200 in 74ms (compile: 2ms, render: 71ms)
+ GET /forms 200 in 76ms (compile: 1569µs, render: 74ms)
+ GET /forms 200 in 75ms (compile: 11ms, render: 64ms)
+ GET /forms 200 in 69ms (compile: 3ms, render: 66ms)
+ GET /forms 200 in 68ms (compile: 2ms, render: 65ms)
+ GET /forms 200 in 68ms (compile: 1176µs, render: 67ms)
+ GET /forms 200 in 56ms (compile: 1270µs, render: 55ms)
+ GET /forms 200 in 56ms (compile: 3ms, render: 53ms)
+ GET /forms 200 in 52ms (compile: 2ms, render: 49ms)
+ GET /forms 200 in 55ms (compile: 5ms, render: 50ms)
+ GET /forms 200 in 68ms (compile: 1578µs, render: 66ms)
+ GET /forms 200 in 61ms (compile: 1337µs, render: 59ms)
+ GET /forms 200 in 62ms (compile: 1595µs, render: 60ms)
+ GET /forms 200 in 94ms (compile: 3ms, render: 90ms)
+ GET /forms 200 in 89ms (compile: 2ms, render: 87ms)
+ GET /forms 200 in 88ms (compile: 3ms, render: 85ms)
+ GET /forms 200 in 79ms (compile: 6ms, render: 73ms)
+ GET /forms 200 in 57ms (compile: 3ms, render: 54ms)
+ GET /forms 200 in 49ms (compile: 1346µs, render: 47ms)
+ GET /forms 200 in 62ms (compile: 1429µs, render: 61ms)
+ GET /forms 200 in 59ms (compile: 2ms, render: 57ms)
+ GET /forms 200 in 58ms (compile: 2ms, render: 56ms)
+ GET /forms 200 in 58ms (compile: 1422µs, render: 57ms)
+ GET /forms 200 in 51ms (compile: 1479µs, render: 49ms)
+ GET /forms 200 in 65ms (compile: 1876µs, render: 63ms)
+ GET /forms 200 in 55ms (compile: 1914µs, render: 53ms)
+ GET /forms 200 in 54ms (compile: 1386µs, render: 53ms)
+ GET /forms 200 in 65ms (compile: 2ms, render: 63ms)
+ GET /forms 200 in 58ms (compile: 2ms, render: 55ms)
+ GET /forms 200 in 46ms (compile: 2ms, render: 44ms)
+ GET /forms 200 in 47ms (compile: 2ms, render: 45ms)
+ GET /forms 200 in 47ms (compile: 1507µs, render: 46ms)
+ GET /forms 200 in 47ms (compile: 1254µs, render: 45ms)
+ GET /forms 200 in 47ms (compile: 5ms, render: 43ms)
+ GET /forms 200 in 45ms (compile: 1259µs, render: 43ms)
+ GET /forms 200 in 47ms (compile: 1617µs, render: 45ms)
+ GET /forms 200 in 62ms (compile: 1726µs, render: 60ms)
+ GET /forms 200 in 55ms (compile: 1497µs, render: 54ms)
+ GET /forms 200 in 70ms (compile: 1776µs, render: 68ms)
+ GET /forms 200 in 68ms (compile: 2ms, render: 65ms)
+ GET /forms 200 in 67ms (compile: 2ms, render: 65ms)
+ GET /forms 200 in 64ms (compile: 4ms, render: 60ms)
+ GET /forms 200 in 63ms (compile: 1319µs, render: 62ms)
+ GET /forms 200 in 63ms (compile: 1424µs, render: 61ms)
+ GET /forms 200 in 54ms (compile: 1358µs, render: 53ms)
+ GET /forms 200 in 70ms (compile: 1810µs, render: 68ms)
+ GET /forms 200 in 79ms (compile: 1433µs, render: 78ms)
+ GET /forms 200 in 90ms (compile: 1988µs, render: 88ms)
+ GET /forms 200 in 97ms (compile: 3ms, render: 94ms)
+ GET /forms 200 in 112ms (compile: 1334µs, render: 110ms)
+ GET /forms 200 in 131ms (compile: 2ms, render: 129ms)
+ GET /forms 200 in 145ms (compile: 3ms, render: 142ms)
+ GET /forms 200 in 128ms (compile: 3ms, render: 125ms)
+ GET /forms 200 in 154ms (compile: 3ms, render: 151ms)
+ GET /forms 200 in 128ms (compile: 8ms, render: 121ms)
+ GET /forms 200 in 92ms (compile: 5ms, render: 87ms)
+✓ Finished filesystem cache database compaction in 14.0s
