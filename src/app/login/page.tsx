@@ -113,7 +113,7 @@ export default function LoginPage() {
 
             {/* Premium Background Image Layer */}
             <div
-                className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.03] pointer-events-none"
+                className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.1] pointer-events-none"
                 style={{ backgroundImage: 'url("/hero-auth.png")' }}
             />
 
