@@ -319,9 +319,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                         onValueChange={async (newTimezone) => {
                             setTimezone(newTimezone);
                             try {
+                                // 1. Update User Timezone
                                 await api.patch(`/users/${user?.id}`, { timezone: newTimezone });
-                                // Update context safely
+
+                                // 2. Update Context
                                 updateUser({ timezone: newTimezone });
+
+                                // 3. Sync with Clinic if Admin
+                                if (user?.clinicId && can('manage_clinic_info')) {
+                                    try {
+                                        await api.patch(`/clinics/${user.clinicId}`, { timezone: newTimezone });
+                                    } catch (err) {
+                                        console.error('Failed to sync clinic timezone with sidebar change:', err);
+                                    }
+                                }
+
                                 toast.success('Timezone updated');
                             } catch (e) {
                                 console.error('Failed to update timezone:', e);

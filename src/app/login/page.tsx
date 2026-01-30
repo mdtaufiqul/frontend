@@ -282,9 +282,9 @@ export default function LoginPage() {
 
                             <div className="mt-8 pt-8 border-t border-slate-200/30 text-center">
                                 <p className="text-[13px] text-[var(--brand-text-muted)] font-medium">
-                                    New Practitioner?{" "}
+                                    Don't have an account?{" "}
                                     <Link href="/register" className="text-[var(--brand-primary)] font-bold hover:underline">
-                                        Register Protocol
+                                        Register
                                     </Link>
                                 </p>
                             </div>

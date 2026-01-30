@@ -43,6 +43,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
         password: '',
         role: initialData?.role || '',
         permissions: initialData?.permissions || {},
+        isPermissionOverridden: initialData?.isPermissionOverridden ?? false,
     });
 
     // Sync state with initialData changes
@@ -56,6 +57,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
                 password: '', // Always blank on edit
                 role: initialData.role || 'DOCTOR',
                 permissions: initialData.permissions || {},
+                isPermissionOverridden: initialData.isPermissionOverridden ?? false,
             });
         } else {
             // Reset for create mode
@@ -67,6 +69,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
                 password: '',
                 role: '', // Empty by default
                 permissions: {},
+                isPermissionOverridden: false,
             });
         }
     }, [initialData, currentUser?.clinicId]);
@@ -111,6 +114,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
     }, [formData.role, isEditing, currentUser?.clinicId, initialData]);
 
     const handleTogglePermission = (key: string) => {
+        if (!formData.isPermissionOverridden) return; // Locked if following template
         if (isDoctor && !isSystemAdmin) return; // Locked for doctors ONLY if not system admin
 
         setFormData((prev: any) => ({
@@ -161,8 +165,8 @@ const StaffModal: React.FC<StaffModalProps> = ({
             items: [
                 { key: 'view_patients', label: 'Access Patient Directory' },
                 { key: 'manage_patients', label: 'Create/Edit Patients' },
-                { key: 'view_doctors', label: 'View Doctor List' },
-                { key: 'manage_doctors', label: 'Manage Doctor Profiles' },
+                { key: 'view_staff', label: 'View Staff Registry' },
+                { key: 'manage_staff', label: 'Manage Staff Profiles' },
             ]
         },
         {
@@ -196,7 +200,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
                         <DialogTitle className="font-semibold text-2xl flex items-center gap-2">
-                            {title || (isEditing ? 'Edit Personnel' : 'Initialize Personnel')}
+                            {title || (isEditing ? 'Edit Member' : 'Add a Member')}
                         </DialogTitle>
                     </DialogHeader>
 
@@ -206,7 +210,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
                             <div className="space-y-4 p-4 bg-slate-50/80 rounded-2xl border border-slate-100">
                                 <div className="space-y-2 relative">
                                     <Label className="text-xs font-bold text-slate-600 flex justify-between">
-                                        <span>Import Existing Personnel</span>
+                                        <span>Import Existing Member</span>
                                         <span className="text-[10px] font-normal text-slate-400">Search by name or email</span>
                                     </Label>
                                     <div className="relative">
@@ -362,11 +366,41 @@ const StaffModal: React.FC<StaffModalProps> = ({
                                     </h4>
                                     <div className="flex items-center gap-1 text-[9px] text-slate-400 font-bold uppercase">
                                         <Info size={10} />
-                                        {isDoctor && !isSystemAdmin ? 'Doctor Permissions Locked' : 'Bypasses Role Defaults'}
+                                        {formData.isPermissionOverridden ? 'Manual Overrides Active' : 'Following Role Template'}
                                     </div>
                                 </div>
 
-                                <div className={`space-y-6 bg-slate-50/50 p-4 rounded-2xl border border-slate-100 ${isDoctor && !isSystemAdmin ? 'opacity-60 pointer-events-none' : ''}`}>
+                                <div className="flex items-center justify-between p-4 bg-blue-50/50 rounded-2xl border border-blue-100">
+                                    <div className="space-y-0.5">
+                                        <p className="text-xs font-bold text-blue-700">Follow Role Template</p>
+                                        <p className="text-[10px] text-blue-600 leading-tight">Sync permissions automatically with the master template.</p>
+                                    </div>
+                                    <Switch
+                                        checked={!formData.isPermissionOverridden}
+                                        onCheckedChange={(checked) => {
+                                            setFormData((prev: any) => ({
+                                                ...prev,
+                                                isPermissionOverridden: !checked
+                                            }));
+                                            if (checked) {
+                                                // If switching back to template, fetch current template
+                                                setLoadingPermissions(true);
+                                                const targetClinicId = currentUser?.clinicId || (initialData?.clinicId) || 'default';
+                                                api.get(`/users/role-permissions?role=${formData.role}&clinicId=${targetClinicId}`)
+                                                    .then(res => {
+                                                        if (res.data) {
+                                                            setFormData((prev: any) => ({ ...prev, permissions: res.data }));
+                                                        }
+                                                    })
+                                                    .catch(err => console.error('Failed to load role permissions:', err))
+                                                    .finally(() => setLoadingPermissions(false));
+                                            }
+                                        }}
+                                        className="scale-90 data-[state=checked]:bg-blue-600"
+                                    />
+                                </div>
+
+                                <div className={`space-y-6 bg-slate-50/50 p-4 rounded-2xl border border-slate-100 ${(!formData.isPermissionOverridden || (isDoctor && !isSystemAdmin)) ? 'opacity-60 pointer-events-none' : ''}`}>
                                     {permissionCategories.map((cat) => (
                                         <div key={cat.group} className="space-y-3">
                                             <h5 className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{cat.group}</h5>
@@ -377,7 +411,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
                                                         <Switch
                                                             checked={!!formData.permissions[item.key]}
                                                             onCheckedChange={() => handleTogglePermission(item.key)}
-                                                            disabled={isDoctor && !isSystemAdmin}
+                                                            disabled={!formData.isPermissionOverridden || (isDoctor && !isSystemAdmin)}
                                                             className="scale-75 data-[state=checked]:bg-[var(--brand-primary)]"
                                                         />
                                                     </div>
@@ -395,7 +429,7 @@ const StaffModal: React.FC<StaffModalProps> = ({
                             Abort
                         </Button>
                         <Button type="submit" className="rounded-full px-8 bg-slate-900 hover:bg-slate-800 text-white shadow-lg">
-                            {isEditing ? 'Push Changes' : 'Initialize Member'}
+                            {isEditing ? 'Push Changes' : 'Add Member'}
                         </Button>
                     </DialogFooter>
                 </form>

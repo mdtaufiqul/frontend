@@ -32,8 +32,8 @@ const PERMISSION_Categories = [
         items: [
             { key: 'view_patients', label: 'Access Patient Directory' },
             { key: 'manage_patients', label: 'Create/Edit Patients' },
-            { key: 'view_doctors', label: 'View Doctor List' },
-            { key: 'manage_doctors', label: 'Manage Doctor Profiles' },
+            { key: 'view_staff', label: 'View Member List' },
+            { key: 'manage_staff', label: 'Manage Member Profiles' },
         ]
     },
     {
@@ -125,8 +125,8 @@ export const RoleSettings = () => {
                                 key={role.value}
                                 onClick={() => setSelectedRole(role.value)}
                                 className={`w-full text-left p-3 rounded-xl text-sm transition-all flex flex-col gap-1 ${selectedRole === role.value
-                                        ? 'bg-slate-900 text-white shadow-md'
-                                        : 'text-slate-600 hover:bg-slate-50'
+                                    ? 'bg-slate-900 text-white shadow-md'
+                                    : 'text-slate-600 hover:bg-slate-50'
                                     }`}
                             >
                                 <div className="font-bold flex items-center justify-between">

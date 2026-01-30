@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import {
     Plus,
     Lock,
@@ -62,7 +63,11 @@ interface Clinic {
 }
 
 const ClinicPage = () => {
-    const [activeTab, setActiveTab] = useState('info');
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+
+    const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'info');
     const [clinic, setClinic] = useState<Clinic | null>(null);
     const [allUsers, setAllUsers] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -85,6 +90,22 @@ const ClinicPage = () => {
     // Billing state
     const [billingStats, setBillingStats] = useState<any>(null);
     const [billingInvoices, setBillingInvoices] = useState<any[]>([]);
+
+    // URL Synchronization
+    const updateTab = useCallback((tabId: string) => {
+        setActiveTab(tabId);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('tab', tabId);
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    }, [pathname, router, searchParams]);
+
+    // Sync state with URL changes (back/forward navigation)
+    useEffect(() => {
+        const currentTab = searchParams.get('tab');
+        if (currentTab && currentTab !== activeTab) {
+            setActiveTab(currentTab);
+        }
+    }, [searchParams, activeTab]);
 
     // Helper function to get all roles for a user
     const getAllUserRoles = (person: any) => {
@@ -137,7 +158,7 @@ const ClinicPage = () => {
             // Let's use a dummy permission 'self_manage' or just accept the warning for now for self-actions? 
             // No, the goal is zero warnings.
             // Let's use 'manage_own_config' which doctors have.
-            await post('manage_own_config', `/users/${user.id}/avatar`, formData, {
+            await post('manage_clinic_info', `/users/${user.id}/avatar`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             toast.success('Profile photo updated');
@@ -205,8 +226,8 @@ const ClinicPage = () => {
             // 'manage_clinics' for clinic details? Or 'view_clinics'?
             // Let's assume 'manage_clinics' is needed for this settings page, as it is the admin dashboard.
             const [clinicRes, usersRes] = await Promise.all([
-                get('manage_clinics', `/clinics/${user.clinicId}`),
-                get('view_users', `/users?clinicId=${user.clinicId}`),
+                get('view_clinic_info', `/clinics/${user.clinicId}`),
+                get('view_staff', `/users?clinicId=${user.clinicId}`),
                 get('view_workflows', '/workflows')
             ]);
 
@@ -230,8 +251,8 @@ const ClinicPage = () => {
         }
         try {
             const [clinicRes, usersRes, workflowsRes] = await Promise.all([
-                get('manage_clinics', `/clinics/${user.clinicId}`),
-                get('view_users', `/users?clinicId=${user.clinicId}`),
+                get('view_clinic_info', `/clinics/${user.clinicId}`),
+                get('view_staff', `/users?clinicId=${user.clinicId}`),
                 get('view_workflows', '/workflows')
             ]);
 
@@ -259,7 +280,18 @@ const ClinicPage = () => {
     const handleUpdateClinic = async (data: any) => {
         if (!clinic) return;
         try {
-            await patch('manage_clinics', `/clinics/${clinic.id}`, data);
+            await patch('manage_clinic_info', `/clinics/${clinic.id}`, data);
+
+            // Sync with User timezone if changed
+            if (data.timezone && data.timezone !== clinic.timezone) {
+                try {
+                    await patch('manage_staff', `/users/${user?.id}`, { timezone: data.timezone });
+                    updateUser({ timezone: data.timezone });
+                } catch (e) {
+                    console.error('Failed to sync user timezone with clinic change:', e);
+                }
+            }
+
             toast.success('Clinic identity updated.');
             fetchData();
             await refreshUser();
@@ -278,7 +310,7 @@ const ClinicPage = () => {
         formData.append('file', file);
 
         try {
-            await post('manage_clinics', `/clinics/${clinic.id}/logo`, formData, {
+            await post('manage_clinic_info', `/clinics/${clinic.id}/logo`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             toast.success('Clinic logo updated successfully');
@@ -298,13 +330,13 @@ const ClinicPage = () => {
             if (userId) {
                 // FORCE clinicId from context if not in data, to ensure backend multi-role logic fires
                 // (Unless data already has it, which it should from StaffModal, but safe fallback)
-                await patch('manage_users', `/users/${userId}`, {
+                await patch('manage_staff', `/users/${userId}`, {
                     ...data,
                     clinicId: data.clinicId || user?.clinicId
                 });
                 toast.success('Member profile synchronized.');
             } else {
-                await post('manage_users', '/users', {
+                await post('manage_staff', '/users', {
                     ...data,
                     clinicId: user?.clinicId
                 });
@@ -322,7 +354,7 @@ const ClinicPage = () => {
     const handleDeleteUser = async (userToDelete: any) => {
         if (!confirm(`Are you sure you want to terminate the access for ${userToDelete.name}?`)) return;
         try {
-            await del('manage_users', `/users/${userToDelete.id}`);
+            await del('manage_staff', `/users/${userToDelete.id}`);
             toast.success('Member removed from registry.');
             fetchData();
         } catch (error: any) {
@@ -331,15 +363,60 @@ const ClinicPage = () => {
     };
 
     const filteredUsers = allUsers.filter(u => {
-        const matchesSearch = u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            u.email.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesSearch = (u.name?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+            (u.email?.toLowerCase() || '').includes(searchQuery.toLowerCase());
 
         let matchesRole = true;
-        if (roleFilter === 'DOCTOR') matchesRole = u.role === 'DOCTOR';
-        if (roleFilter === 'STAFF') matchesRole = u.role !== 'DOCTOR';
+        if (roleFilter !== 'ALL') {
+            const allMyRoles = getAllUserRoles(u).map(r => r.role);
+            if (roleFilter === 'DOCTOR') {
+                matchesRole = allMyRoles.includes('DOCTOR');
+            } else if (roleFilter === 'STAFF') {
+                // Staff includes anything that isn't primarily a doctor, or has other roles
+                matchesRole = allMyRoles.some(r => r !== 'DOCTOR');
+            }
+        }
 
         return matchesSearch && matchesRole;
     });
+
+    const aggregatedUsers = useMemo(() => {
+        const map = new Map<string, any>();
+        filteredUsers.forEach(u => {
+            const email = u.email?.toLowerCase();
+            if (!email) return;
+            if (map.has(email)) {
+                const existing = map.get(email);
+                // Collect roles into memberships
+                if (!existing.memberships) existing.memberships = [];
+                // Add this user's primary role as a pseudo-membership if not already present
+                const isDupPrimary = existing.role === u.role;
+                const isDupInMembers = existing.memberships.some((m: any) => m.role === u.role);
+
+                if (!isDupPrimary && !isDupInMembers) {
+                    existing.memberships.push({
+                        role: u.role,
+                        clinic: u.clinic,
+                        clinicId: u.clinicId
+                    });
+                }
+
+                // Merge memberships
+                if (u.memberships) {
+                    u.memberships.forEach((m: any) => {
+                        const isAlreadyThere = (existing.role === m.role) ||
+                            existing.memberships.some((em: any) => em.role === m.role);
+                        if (!isAlreadyThere) {
+                            existing.memberships.push(m);
+                        }
+                    });
+                }
+            } else {
+                map.set(email, { ...u });
+            }
+        });
+        return Array.from(map.values());
+    }, [filteredUsers]);
 
     if (isLoading) return (
         <div className="h-[60vh] flex flex-col items-center justify-center text-slate-400 gap-4">
@@ -401,7 +478,7 @@ const ClinicPage = () => {
                         return (
                             <button
                                 key={tab.id}
-                                onClick={() => setActiveTab(tab.id)}
+                                onClick={() => updateTab(tab.id)}
                                 className={clsx(
                                     "flex items-center gap-2 px-6 py-2.5 rounded-[1.5rem] text-[13px] font-bold transition-all duration-300 relative overflow-hidden",
                                     IsActive
@@ -599,7 +676,7 @@ const ClinicPage = () => {
                                                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
                                                     <input
                                                         type="text"
-                                                        placeholder="Search personnel..."
+                                                        placeholder="Search member..."
                                                         className="w-full pl-11 pr-4 py-2.5 bg-white/60 border border-slate-200/60 rounded-xl text-sm focus:bg-white transition-all font-medium"
                                                         value={searchQuery}
                                                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -624,15 +701,16 @@ const ClinicPage = () => {
 
                                     {staffView === 'members' ? (
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            {filteredUsers.map((person) => {
-                                                const isSystemAdmin = person.role === 'SYSTEM_ADMIN' || person.role === 'SAAS_OWNER';
-                                                const isDoctor = person.role === 'DOCTOR';
+                                            {aggregatedUsers.map((person: any) => {
+                                                const roles = getAllUserRoles(person);
+                                                const isSystemAdmin = roles.some(r => r.role === 'SYSTEM_ADMIN');
+                                                const isDoctor = roles.some(r => r.role === 'DOCTOR');
 
                                                 return (
                                                     <Card
-                                                        key={person.id}
+                                                        key={person.email}
                                                         className={clsx(
-                                                            "p-6 rounded-[2rem] shadow-sm transition-all group flex flex-col h-full",
+                                                            "group relative flex flex-col p-6 bg-white/60 backdrop-blur-xl border-slate-200/60 rounded-[2rem] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden",
                                                             isSystemAdmin
                                                                 ? "bg-gradient-to-br from-amber-50/50 to-white border-amber-200/60 shadow-amber-100/50 relative overflow-hidden"
                                                                 : isDoctor

@@ -323,7 +323,7 @@ export default function RegisterPage() {
                                 <p className="text-[13px] text-[var(--brand-text-muted)] font-medium">
                                     Already onboarded?{" "}
                                     <Link href="/login" className="text-[var(--brand-primary)] font-bold hover:underline">
-                                        Identity Portal
+                                        Login
                                     </Link>
                                 </p>
                             </div>

@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import dynamic from 'next/dynamic';
 import { Globe, MapPin } from 'lucide-react';
+import { POPULAR_TIMEZONES } from '@/utils/timezones';
 
 const LocationPicker = dynamic(() => import('@/components/ui/LocationPicker').then(mod => mod.LocationPicker), { ssr: false });
 
@@ -105,24 +106,15 @@ const ClinicModal: React.FC<ClinicModalProps> = ({
                                             value={formData.timezone}
                                             onChange={(e) => setFormData(p => ({ ...p, timezone: e.target.value }))}
                                         >
-                                            <option value="UTC">UTC (Universal Time)</option>
-                                            <optgroup label="North America">
-                                                <option value="America/New_York">Eastern Time (US & Canada)</option>
-                                                <option value="America/Chicago">Central Time (US & Canada)</option>
-                                                <option value="America/Denver">Mountain Time (US & Canada)</option>
-                                                <option value="America/Los_Angeles">Pacific Time (US & Canada)</option>
-                                            </optgroup>
-                                            <optgroup label="Europe">
-                                                <option value="Europe/London">London</option>
-                                                <option value="Europe/Paris">Paris</option>
-                                                <option value="Europe/Berlin">Berlin</option>
-                                            </optgroup>
-                                            <optgroup label="Asia & Pacific">
-                                                <option value="Asia/Dubai">Dubai</option>
-                                                <option value="Asia/Singapore">Singapore</option>
-                                                <option value="Asia/Tokyo">Tokyo</option>
-                                                <option value="Australia/Sydney">Sydney</option>
-                                            </optgroup>
+                                            {Array.from(new Set(POPULAR_TIMEZONES.map(t => t.region))).map(region => (
+                                                <optgroup key={region} label={region}>
+                                                    {POPULAR_TIMEZONES.filter(t => t.region === region).map(tz => (
+                                                        <option key={tz.value} value={tz.value}>
+                                                            {tz.label}
+                                                        </option>
+                                                    ))}
+                                                </optgroup>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
