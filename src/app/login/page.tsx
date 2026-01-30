@@ -133,8 +133,8 @@ export default function LoginPage() {
                     {/* Background decorative glass layer */}
                     <div className="absolute -inset-4 bg-blue-500/10 blur-3xl rounded-full" />
 
-                    <div className="relative flex flex-col bg-white rounded-[var(--radius-auth-card)] border border-slate-200/60 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1),0_0_60px_-15px_rgba(59,130,246,0.1)]">
-                        <div className="p-8 md:p-10 flex flex-col">
+                    <div className="relative flex flex-col bg-white rounded-[var(--radius-auth-card)] border border-slate-200/60 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1),0_0_60px_-15px_rgba(59,130,246,0.1)] max-h-[calc(100vh-32px)] overflow-hidden">
+                        <div className="p-8 md:p-10 flex flex-col overflow-y-auto custom-scrollbar">
                             {/* Header */}
                             <div className="mb-8 text-center">
                                 <div className="flex items-center justify-center gap-3 mb-6">

@@ -118,8 +118,8 @@ export default function RegisterPage() {
                 <div className="relative flex flex-col">
                     <div className="absolute -inset-6 bg-blue-500/10 blur-3xl rounded-full" />
 
-                    <div className="relative flex flex-col bg-white rounded-[var(--radius-auth-card)] border border-slate-200/60 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1),0_0_60px_-15px_rgba(59,130,246,0.1)]">
-                        <div className="p-6 md:p-8 flex flex-col custom-scrollbar">
+                    <div className="relative flex flex-col bg-white rounded-[var(--radius-auth-card)] border border-slate-200/60 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1),0_0_60px_-15px_rgba(59,130,246,0.1)] max-h-[calc(100vh-32px)] overflow-hidden">
+                        <div className="p-6 md:p-8 flex flex-col overflow-y-auto custom-scrollbar">
                             {/* Header */}
                             <div className="mb-8 text-center">
                                 <div className="flex items-center justify-center gap-3 mb-6">
@@ -148,6 +148,21 @@ export default function RegisterPage() {
                                     >
                                         <form onSubmit={handleRequestVerification} className="space-y-6">
                                             <div className="space-y-5">
+                                                <div className="space-y-4 p-4 rounded-2xl border border-slate-200/40 bg-white/30">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="flex -space-x-1">
+                                                            <Activity className="w-4 h-4 text-emerald-500" />
+                                                            <Brain className="w-4 h-4 text-indigo-500" />
+                                                            <Stethoscope className="w-4 h-4 text-blue-500" />
+                                                            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                                                        </div>
+                                                        <div>
+                                                            <h4 className="text-[13px] font-bold text-slate-800">Clinic Owner</h4>
+                                                            <p className="text-[11px] text-slate-500 font-medium">Full clinical & administrative access.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div className="space-y-2">
                                                     <label className="font-mono text-[10px] font-bold text-[var(--brand-text-muted)] uppercase tracking-widest px-1">
                                                         Full Name
@@ -174,21 +189,6 @@ export default function RegisterPage() {
                                                         className="block w-full px-4 py-3.5 bg-white/40 border border-slate-200/50 text-[var(--brand-text-main)] text-[14px] rounded-[var(--radius-auth-button)] focus:bg-white/80 focus:border-[var(--brand-primary)] outline-none transition-all placeholder:text-slate-400"
                                                         placeholder="email@example.com"
                                                     />
-                                                </div>
-
-                                                <div className="space-y-4 p-4 rounded-2xl border border-slate-200/40 bg-white/30">
-                                                    <div className="flex items-center gap-4">
-                                                        <div className="flex -space-x-1">
-                                                            <Activity className="w-4 h-4 text-emerald-500" />
-                                                            <Brain className="w-4 h-4 text-indigo-500" />
-                                                            <Stethoscope className="w-4 h-4 text-blue-500" />
-                                                            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                                                        </div>
-                                                        <div>
-                                                            <h4 className="text-[13px] font-bold text-slate-800">Clinic Owner</h4>
-                                                            <p className="text-[11px] text-slate-500 font-medium">Full clinical & administrative access.</p>
-                                                        </div>
-                                                    </div>
                                                 </div>
 
                                                 <div className="space-y-2">
