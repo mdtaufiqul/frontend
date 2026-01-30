@@ -221,11 +221,21 @@ export default function RegisterPage() {
                                             </div>
 
                                             {error && (
-                                                <div className="flex items-center gap-2 text-red-600 bg-red-50/50 p-3 rounded-xl border border-red-100/50">
-                                                    <AlertCircle className="w-4 h-4 shrink-0" />
-                                                    <div className="flex-1">
-                                                        <p className="text-[12px] font-medium leading-tight">{error}</p>
+                                                <div className="flex flex-col gap-2 text-red-600 bg-red-50/50 p-3 rounded-xl border border-red-100/50">
+                                                    <div className="flex items-center gap-2">
+                                                        <AlertCircle className="w-4 h-4 shrink-0" />
+                                                        <div className="flex-1">
+                                                            <p className="text-[12px] font-medium leading-tight">{error}</p>
+                                                        </div>
                                                     </div>
+                                                    {error.toLowerCase().includes("already exists") && (
+                                                        <Link
+                                                            href={`/login?email=${encodeURIComponent(email)}`}
+                                                            className="text-[12px] font-bold text-[var(--brand-primary)] hover:underline ml-6"
+                                                        >
+                                                            Proceed to Login →
+                                                        </Link>
+                                                    )}
                                                 </div>
                                             )}
 
