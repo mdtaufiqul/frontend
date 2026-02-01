@@ -125,8 +125,29 @@ const Messages: React.FC = () => {
                 const response = await api.get('/conversations', { params: { type } });
                 setConversations(response.data);
 
-                if (response.data.length > 0 && !selectedConversationId) {
-                    // Auto select logic optional
+                // If specialized conversation ID in URL
+                if (activeConversationId) {
+                    const found = response.data.find((c: any) => c.id === activeConversationId);
+                    if (found) {
+                        setSelectedConversationId(found.id);
+                        setSelectedPatientId(found.patient?.id || found.visitor?.id);
+                    } else {
+                        // If not in list (maybe new or different type), try fetching single
+                        try {
+                            const singleRes = await api.get(`/conversations/${activeConversationId}`);
+                            if (singleRes.data) {
+                                // Add to list if not present so UI can render it
+                                setConversations(prev => {
+                                    if (prev.some(c => c.id === singleRes.data.id)) return prev;
+                                    return [singleRes.data, ...prev];
+                                });
+                                setSelectedConversationId(singleRes.data.id);
+                                setSelectedPatientId(singleRes.data.patient?.id || singleRes.data.visitor?.id);
+                            }
+                        } catch (err) {
+                            console.error("Failed to fetch specific conversation:", err);
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Failed to fetch conversations:', error);
@@ -138,7 +159,7 @@ const Messages: React.FC = () => {
         if (user) {
             fetchConversations();
         }
-    }, [user, activeTab]); // Re-fetch when tab changes
+    }, [user, activeTab, activeConversationId]); // Added activeConversationId dep
 
     // Map conversations to standardized display objects
     const displayList = conversations.map(conv => {
@@ -278,7 +299,7 @@ const Messages: React.FC = () => {
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <div className="font-black text-slate-900 text-sm group-hover:text-primary-600 transition-colors">{patient.name}</div>
-                                                {patient.createdAt && (
+                                                {patient.createdAt && !isNaN(new Date(patient.createdAt).getTime()) && (
                                                     <span className="text-[10px] font-medium text-slate-400 bg-slate-50 px-1.5 py-0.5 rounded-md">
                                                         {format(new Date(patient.createdAt), 'MMM yyyy')}
                                                     </span>
@@ -300,12 +321,12 @@ const Messages: React.FC = () => {
 
             {/* Chat Area */}
             <div className="flex-1 flex flex-col bg-white">
-                {activePatient && selectedConversationId ? (
+                {(activePatient || (selectedPatientId && selectedConversationId)) ? (
                     <ChatInterface
-                        conversationId={selectedConversationId}
-                        patientId={activePatient.id}
-                        patientName={activePatient.name}
-                        patientSource={activePatient.source || 'whatsapp'}
+                        conversationId={selectedConversationId!}
+                        patientId={selectedPatientId!}
+                        patientName={activePatient?.name || 'Loading Patient...'}
+                        patientSource={activePatient?.source || 'whatsapp'}
                     />
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center p-12 text-center bg-slate-50/20">

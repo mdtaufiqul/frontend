@@ -190,7 +190,7 @@ const FormRenderer: React.FC<FormRendererProps> = ({ config, onSubmit, onDataCha
         setFormData({});
         setErrors({});
         setSubmitted(false);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+         
     }, [config.title]); // Reset if form title changes (implies new form)
 
     // Sync formData changes to parent on mount and when formData changes

@@ -68,7 +68,7 @@ export const setAuthToken = (token: string | null) => {
 
 // Initial load check
 if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('auth_token');
+    const token = localStorage.getItem('auth_token') || localStorage.getItem('patient_token');
     if (token) {
         setAuthToken(token);
     }

@@ -392,7 +392,7 @@ const SetupWizard: React.FC<SetupWizardProps> = ({ isOpen, onClose, initialStepI
         console.log('[SetupWizard] Current FormData:', JSON.stringify(formData, null, 2));
         try {
             // Track updates to apply to both formData and savedData
-            let updates: Partial<typeof formData> = {};
+            const updates: Partial<typeof formData> = {};
 
             console.log('[SetupWizard] Entering switch case...');
             switch (activeStep.id) {

@@ -13,6 +13,16 @@ import { usePermissionApi } from '@/hooks/usePermissionApi';
 import { useAuth } from '@/context/AuthContext';
 import { PERMISSIONS } from '@/config/apiPermissions';
 import { toast } from 'sonner';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface Patient {
     id: string;
@@ -102,11 +112,13 @@ const Patients: React.FC = () => {
                 gender: data.gender || 'Other',
                 dob: null // defaulting for now
             });
+            toast.success('Patient created successfully');
             fetchPatients();
             setIsCreateModalOpen(false);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Failed to create patient:', error);
-            alert('Failed to create patient');
+            const errorMessage = error.response?.data?.message || 'Failed to create patient';
+            toast.error(errorMessage);
         }
     };
 
@@ -123,7 +135,7 @@ const Patients: React.FC = () => {
             }
         } catch (error) {
             console.error('Failed to start conversation:', error);
-            alert('Failed to start conversation'); // Simple feedback
+            toast.error('Failed to start conversation');
         }
     };
 
@@ -134,16 +146,25 @@ const Patients: React.FC = () => {
         return matchesSearch && matchesStatus && matchesRisk;
     });
 
-    const handleDeletePatient = async (e: React.MouseEvent, id: string) => {
+    const [patientToDelete, setPatientToDelete] = useState<string | null>(null);
+
+    const handleDeleteClick = (e: React.MouseEvent, id: string) => {
         e.stopPropagation();
-        if (!confirm('Are you sure you want to delete this patient record? This action is permanent.')) return;
+        setPatientToDelete(id);
+    };
+
+    const confirmDelete = async () => {
+        if (!patientToDelete) return;
+
         try {
-            await api.delete(`/patients/${id}`);
+            await api.delete(`/patients/${patientToDelete}`);
             toast.success('Patient record deleted');
             fetchPatients();
         } catch (error) {
             console.error('Failed to delete patient:', error);
             toast.error('Failed to delete patient');
+        } finally {
+            setPatientToDelete(null);
         }
     };
 
@@ -327,14 +348,14 @@ const Patients: React.FC = () => {
                                                 </button>
                                                 {(user?.role === 'SYSTEM_ADMIN' || user?.role === 'SAAS_OWNER') && (
                                                     <button
-                                                        onClick={(e) => handleDeletePatient(e, patient.id)}
+                                                        onClick={(e) => handleDeleteClick(e, patient.id)}
                                                         className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded"
                                                         title="Delete Patient"
                                                     >
                                                         <Trash2 size={16} />
                                                     </button>
                                                 )}
-                                                <button className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded"><MoreHorizontal size={16} /></button>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -362,6 +383,21 @@ const Patients: React.FC = () => {
                 onClose={() => setIsCreateModalOpen(false)}
                 onSave={handleCreatePatient}
             />
+
+            <AlertDialog open={!!patientToDelete} onOpenChange={(open) => !open && setPatientToDelete(null)}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the patient record and remove their data from our servers.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={confirmDelete} className="bg-red-600 hover:bg-red-700">Delete</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 };
