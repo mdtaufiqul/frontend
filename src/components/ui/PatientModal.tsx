@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Mail, Phone, MapPin, Save } from 'lucide-react';
 import Modal from './Modal';
 import { Button } from './button';
@@ -10,17 +10,43 @@ interface PatientModalProps {
 }
 
 const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose, onSave }) => {
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         firstName: '',
         lastName: '',
         email: '',
         phone: '',
         address: '',
         age: '',
-        type: 'Private'
-    });
+        gender: 'Other'
+    };
+
+    const [formData, setFormData] = useState(initialFormData);
+    const [errors, setErrors] = useState<Record<string, string>>({});
+
+    // Reset form when modal opens
+    useEffect(() => {
+        if (isOpen) {
+            setFormData(initialFormData);
+            setErrors({});
+        }
+    }, [isOpen]);
+
+    const validate = () => {
+        const newErrors: Record<string, string> = {};
+        if (!formData.firstName.trim()) newErrors.firstName = 'First Name is required';
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = 'Invalid email format';
+        }
+        if (!formData.gender) newErrors.gender = 'Gender is required';
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleSave = () => {
+        if (!validate()) return;
         if (onSave) onSave(formData);
         onClose();
     };
@@ -35,17 +61,21 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose, onSave }) 
             <div className="space-y-5">
                 <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">First Name</label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">First Name <span className="text-red-500">*</span></label>
                         <div className="relative">
                             <User size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                             <input
                                 type="text"
                                 value={formData.firstName}
-                                onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                onChange={(e) => {
+                                    setFormData({ ...formData, firstName: e.target.value });
+                                    if (errors.firstName) setErrors({ ...errors, firstName: '' });
+                                }}
                                 placeholder="e.g. Sarah"
-                                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-medium"
+                                className={`w-full pl-9 pr-4 py-2 bg-slate-50 border ${errors.firstName ? 'border-red-500' : 'border-slate-200'} rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-medium`}
                             />
                         </div>
+                        {errors.firstName && <p className="text-xs text-red-500">{errors.firstName}</p>}
                     </div>
                     <div className="space-y-1.5">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Last Name</label>
@@ -61,17 +91,21 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose, onSave }) 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Email Address</label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Email Address <span className="text-red-500">*</span></label>
                         <div className="relative">
                             <Mail size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                             <input
                                 type="email"
                                 value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                onChange={(e) => {
+                                    setFormData({ ...formData, email: e.target.value });
+                                    if (errors.email) setErrors({ ...errors, email: '' });
+                                }}
                                 placeholder="sarah.c@sky.net"
-                                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-medium"
+                                className={`w-full pl-9 pr-4 py-2 bg-slate-50 border ${errors.email ? 'border-red-500' : 'border-slate-200'} rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-medium`}
                             />
                         </div>
+                        {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
                     </div>
                     <div className="space-y-1.5">
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Phone Number</label>
@@ -114,34 +148,20 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose, onSave }) 
                         />
                     </div>
                     <div className="space-y-1.5">
-                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Gender</label>
+                        <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Gender <span className="text-red-500">*</span></label>
                         <select
-                            value={(formData as any).gender || 'Other'}
-                            onChange={(e) => setFormData({ ...formData, gender: e.target.value } as any)}
-                            className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-medium"
+                            value={formData.gender}
+                            onChange={(e) => {
+                                setFormData({ ...formData, gender: e.target.value });
+                                if (errors.gender) setErrors({ ...errors, gender: '' });
+                            }}
+                            className={`w-full px-4 py-2 bg-slate-50 border ${errors.gender ? 'border-red-500' : 'border-slate-200'} rounded-xl text-sm outline-none focus:ring-2 focus:ring-primary-500/10 focus:border-primary-500 transition-all font-medium`}
                         >
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Other">Other</option>
                         </select>
-                    </div>
-                </div>
-
-                <div className="space-y-1.5">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Patient Type</label>
-                    <div className="flex gap-2">
-                        {['Private', 'Insurance', 'Group'].map(type => (
-                            <button
-                                key={type}
-                                onClick={() => setFormData({ ...formData, type })}
-                                className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all border ${formData.type === type
-                                    ? 'bg-primary-50 border-primary-200 text-primary-600 shadow-sm'
-                                    : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
-                                    }`}
-                            >
-                                {type}
-                            </button>
-                        ))}
+                        {errors.gender && <p className="text-xs text-red-500">{errors.gender}</p>}
                     </div>
                 </div>
 
@@ -165,6 +185,5 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose, onSave }) 
         </Modal>
     );
 };
-
 
 export default PatientModal;

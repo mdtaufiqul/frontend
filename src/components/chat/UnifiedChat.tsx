@@ -18,9 +18,9 @@ interface UnifiedChatProps {
     apiBaseUrl?: string; // e.g. http://localhost:3001
 }
 
-import { getApiBaseUrl } from '@/utils/api';
+import api from '@/utils/api';
 
-export const UnifiedChat: React.FC<UnifiedChatProps> = ({ patientId, doctorId, apiBaseUrl = getApiBaseUrl() }) => {
+export const UnifiedChat: React.FC<UnifiedChatProps> = ({ patientId, doctorId }) => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
     const [channel, setChannel] = useState<'IN_APP' | 'SMS' | 'WHATSAPP' | 'EMAIL'>('IN_APP');
@@ -30,12 +30,9 @@ export const UnifiedChat: React.FC<UnifiedChatProps> = ({ patientId, doctorId, a
     // Fetch History
     const fetchHistory = async () => {
         try {
-            const res = await fetch(`${apiBaseUrl}/api/communication/history/${patientId}`);
-            if (res.ok) {
-                const data = await res.json();
-                setMessages(data);
-                scrollToBottom();
-            }
+            const res = await api.get(`/communication/history/${patientId}`);
+            setMessages(res.data);
+            scrollToBottom();
         } catch (e) {
             console.error('Failed to fetch chat history', e);
         }
@@ -58,23 +55,17 @@ export const UnifiedChat: React.FC<UnifiedChatProps> = ({ patientId, doctorId, a
         setLoading(true);
 
         try {
-            const res = await fetch(`${apiBaseUrl}/api/communication/send`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    doctorId,
-                    patientId,
-                    type: channel,
-                    content: inputText
-                })
+            await api.post('/communication/send', {
+                doctorId,
+                patientId,
+                type: channel,
+                content: inputText
             });
-
-            if (!res.ok) throw new Error('Failed to send');
 
             setInputText('');
             fetchHistory(); // Refresh
         } catch (e: any) {
-            alert('Failed to send message: ' + e.message);
+            alert('Failed to send message: ' + (e.response?.data?.message || e.message));
         } finally {
             setLoading(false);
         }

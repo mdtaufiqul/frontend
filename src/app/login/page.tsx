@@ -73,7 +73,8 @@ export default function LoginPage() {
         } catch (err: any) {
             console.error("Login error:", err);
             setError(err.response?.data?.message || "Verification failed. Please check your credentials.");
-            toast.error("Access denied.");
+            setError(err.response?.data?.message || "Verification failed. Please check your credentials.");
+            toast.error(err.response?.data?.message || "Login failed. Check credentials.");
         } finally {
             setIsLoading(false);
         }
@@ -113,7 +114,7 @@ export default function LoginPage() {
 
             {/* Premium Background Image Layer */}
             <div
-                className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.1] pointer-events-none"
+                className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-[0.2] mix-blend-overlay pointer-events-none"
                 style={{ backgroundImage: 'url("/hero-auth.png")' }}
             />
 
@@ -137,7 +138,7 @@ export default function LoginPage() {
                         <div className="p-8 md:p-10 flex flex-col overflow-y-auto custom-scrollbar">
                             {/* Header */}
                             <div className="mb-8 text-center">
-                                <div className="flex items-center justify-center gap-3 mb-6">
+                                <div className="flex items-center justify-center gap-1 mb-6">
                                     <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-slate-100">
                                         <Stethoscope className="w-6 h-6 text-[var(--brand-primary)]" />
                                     </div>
@@ -291,12 +292,12 @@ export default function LoginPage() {
                         </div>
 
                         {/* Secure Footer Segment */}
-                        <div className="bg-slate-900/5 p-4 flex items-center justify-center gap-6">
-                            <div className="flex items-center gap-1.5 opacity-40">
+                        <div className="bg-slate-900/10 p-4 flex items-center justify-center gap-6 backdrop-blur-sm">
+                            <div className="flex items-center gap-1 opacity-70">
                                 <ShieldCheck className="w-3.5 h-3.5" />
                                 <span className="font-mono text-[8px] font-bold tracking-tighter">ENCR-256</span>
                             </div>
-                            <div className="flex items-center gap-1.5 opacity-40">
+                            <div className="flex items-center gap-1 opacity-70">
                                 <Cpu className="w-3.5 h-3.5" />
                                 <span className="font-mono text-[8px] font-bold tracking-tighter">NODE-01</span>
                             </div>

@@ -299,9 +299,17 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ conversationId: initialCo
                         // isMe check: 
                         // 1. My ID matches senderId
                         // 2. I am a doctor/staff and it's a USER message (outgoing)
+                        // isMe check: 
+                        // 1. My ID matches senderId (standard User)
+                        // 2. I am a doctor/staff and it's a USER message
+                        // 3. I am a patient and it's a PATIENT message (since senderId might be null or matching patientId)
                         const isMe = msg.senderId === currentUserId ||
-                            (['doctor', 'clinic_admin', 'clinic_representative', 'system_admin', 'saas_owner'].includes(userRole) &&
-                                (msg.senderType?.toUpperCase() === 'USER' || (msg.senderType as any) === 'doctor'));
+                            (['doctor', 'clinic_admin', 'clinic_representative', 'system_admin', 'saas_owner', 'staff', 'nurse'].includes(userRole) &&
+                                (msg.senderType?.toUpperCase() === 'USER' || (msg.senderType as any) === 'doctor')) ||
+                            (userRole === 'patient' && msg.senderType?.toUpperCase() === 'PATIENT');
+                        
+                        // Debug log to trace alignment issues if any
+                        // console.log(`Msg ${msg.text}: senderId=${msg.senderId}, myId=${currentUserId}, role=${userRole}, type=${msg.senderType} => isMe=${isMe}`);
 
                         return (
                             <div
