@@ -9,7 +9,10 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif"
 const spaceMono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "MediFlow",
+  title: {
+    default: "MediFlow",
+    template: "%s | MediFlow",
+  },
   description: "Modern EMR Solution",
 };
 

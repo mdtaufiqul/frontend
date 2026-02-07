@@ -22,11 +22,12 @@ interface ChatInterfaceProps {
     patientName?: string;
     patientSource?: 'whatsapp' | 'email'; // For icon display
     isMeetingView?: boolean; // To adjust styling for sidebar vs full page
+    onConversationCreated?: (id: string) => void;
 }
 
 // ... imports
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ conversationId: initialConversationId, patientId, patientName, patientSource = 'whatsapp', isMeetingView = false }) => {
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ conversationId: initialConversationId, patientId, patientName, patientSource = 'whatsapp', isMeetingView = false, onConversationCreated }) => {
     const [conversationId, setConversationId] = useState<string | undefined>(initialConversationId);
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputText, setInputText] = useState('');
@@ -150,8 +151,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ conversationId: initialCo
             if (conversationId || !patientId) return;
 
             try {
-                // Try to find an existing conversation
-                const response = await api.get(`/conversations?patientId=${patientId}`);
+                // Try to find an existing conversation by checking both possible roles for the target ID
+                const response = await api.get(`/conversations?patientId=${patientId}&doctorId=${patientId}`);
                 if (response.data && response.data.length > 0) {
                     setConversationId(response.data[0].id);
                 } else {
@@ -196,14 +197,27 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ conversationId: initialCo
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!inputText.trim() || !conversationId) {
-            if (!conversationId) console.error("No conversation ID found");
-            return;
-        }
+        if (!inputText.trim()) return;
+
+        let activeConvId = conversationId;
 
         try {
-            // Send via REST API
-            const response = await api.post(`/conversations/${conversationId}/messages`, {
+            // 1. Create conversation if missing
+            if (!activeConvId && patientId) {
+                const convRes = await api.post('/conversations', { patientId });
+                activeConvId = convRes.data.id;
+                setConversationId(activeConvId);
+                if (onConversationCreated) onConversationCreated(activeConvId);
+                // Also update URL if needed or notify parent, but for now just continue
+            }
+
+            if (!activeConvId) {
+                toast.error("Could not establish a conversation");
+                return;
+            }
+
+            // 2. Send via REST API
+            const response = await api.post(`/conversations/${activeConvId}/messages`, {
                 content: inputText,
                 onBehalfOfId: onBehalfOfId || undefined
             });
