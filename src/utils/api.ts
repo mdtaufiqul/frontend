@@ -58,6 +58,27 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
     });
 }
 
+// Global Response Interceptor for handling Auth errors
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            console.warn('[API] 401 Unauthorized detected. Clearing session...');
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('auth_token');
+                localStorage.removeItem('auth_user');
+                localStorage.removeItem('patient_token');
+                
+                // Only redirect if not already on a login page
+                if (!window.location.pathname.includes('/login')) {
+                    window.location.href = '/login';
+                }
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
 export const setAuthToken = (token: string | null) => {
     if (token) {
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
